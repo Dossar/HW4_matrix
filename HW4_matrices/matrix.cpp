@@ -17,28 +17,62 @@ using namespace std;
  */
 int main() {
 
-    int m1rows, m1cols, m2rows, m2cols;
+    int m1rows = 3, m1cols = 3, m2rows = 3, m2cols = 3;
     int i, j, k;
     int sum = 0;
     int diff = 0;
-
-    // Enter in the dimensions of our two matrices.
-    cout << "Enter dimensions of your two matrices to multiply." << endl;
-    cout << "Remember the columns of 1st matrix need to match rows of 2nd matrix." << endl;
-    cout << "Matrix 1 rows: ";
-    cin >> m1rows; // Rows of matrix1
-    cout << "Matrix 1 columns: ";
-    cin >> m1cols; // Columns of matrix1
-    cout << "Matrix 2 rows: ";
-    cin >> m2rows; // Rows of matrix2
-    cout << "Matrix 2 columns: ";
-    cin >> m2cols; // Columns of matrix
+    int diagvalue;
+    
+    // Initialize our test matrices.
+    int zeroMatrix[m1cols][m1cols];
+    int diagMatrix[m1cols][m1cols];
     int matrix1[m1rows][m1cols], matrix2[m2rows][m2cols];
     int prodMatrix1[m1rows][m2cols]; // Result from multiplication
     int addMatrix1[m1rows][m1cols]; // Result from addition
     int subMatrix1[m1rows][m1cols]; // Result from addition
-    cout << endl;
-
+    
+    
+    // CREATE ZERO MATRIX
+    for (i = 0; i < 3 ; i++) {
+        for (j = 0; j < 3 ; j++)
+            zeroMatrix[i][j] = 0;
+    }     
+    
+    cout << "Zero Matrix:" << endl;
+    for (i = 0; i < 3 ; i++) {
+        for (j = 0; j < 3 ; j++) {
+            cout << zeroMatrix[i][j] << " ";
+        }
+        cout << endl; // Newline for next row
+    }
+    cout << "\n";
+    // END CREATE ZERO MATRIX
+    
+    
+    // CREATE DIAGONAL MATRIX
+    cout << "Enter value you want in your diagonal:" << endl;
+    cin >> diagvalue;
+    cout << "\n";
+    
+    for (i = 0; i < 3 ; i++) {
+        // Initialize entire row to zero first, then insert number into diagonal.
+        for (j = 0; j < 3 ; j++)
+            diagMatrix[i][j] = 0;
+        j = 0; // Reinitialize j to zero so we can get the correct column in the diagonal
+        j += i;
+        diagMatrix[i][j] = diagvalue;
+    }     
+    
+    cout << "Diagonal Matrix:" << endl;
+    for (i = 0; i < 3 ; i++) {
+        for (j = 0; j < 3 ; j++) {
+            cout << diagMatrix[i][j] << " ";
+        }
+        cout << endl; // Newline for next row
+    }
+    cout << "\n";
+    // END CREATE DIAGONAL MATRIX    
+    
     
     // INPUT MATRICES
     cout << "Input numbers for matrix 1." << endl;
@@ -139,6 +173,30 @@ int main() {
         cout << endl; // Newline for next row
     }
     // END OF MATRIX SUBTRACTION
+    
+    
+    /*
+     The follow block of code was originally for scanning in dimensions. We don't need this right now.
+     */
+    
+//    // Enter in the dimensions of our two matrices.
+//    cout << "Enter dimensions of your two matrices to multiply." << endl;
+//    cout << "Remember the columns of 1st matrix need to match rows of 2nd matrix." << endl;
+//    cout << "Matrix 1 rows: ";
+//    cin >> m1rows; // Rows of matrix1
+//    cout << "Matrix 1 columns: ";
+//    cin >> m1cols; // Columns of matrix1
+//    cout << "Matrix 2 rows: ";
+//    cin >> m2rows; // Rows of matrix2
+//    cout << "Matrix 2 columns: ";
+//    cin >> m2cols; // Columns of matrix
+//    int matrix1[m1rows][m1cols], matrix2[m2rows][m2cols];
+//    int prodMatrix1[m1rows][m2cols]; // Result from multiplication
+//    int addMatrix1[m1rows][m1cols]; // Result from addition
+//    int subMatrix1[m1rows][m1cols]; // Result from addition
+//    cout << endl;
+//
+//     
     
     return 0;
 }
