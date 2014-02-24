@@ -20,6 +20,7 @@ int main() {
     int m1rows, m1cols, m2rows, m2cols;
     int i, j, k;
     int sum = 0;
+    int diff = 0;
 
     // Enter in the dimensions of our two matrices.
     cout << "Enter dimensions of your two matrices to multiply." << endl;
@@ -33,9 +34,13 @@ int main() {
     cout << "Matrix 2 columns: ";
     cin >> m2cols; // Columns of matrix
     int matrix1[m1rows][m1cols], matrix2[m2rows][m2cols];
-    int prodMatrix1[m1rows][m2cols];
+    int prodMatrix1[m1rows][m2cols]; // Result from multiplication
+    int addMatrix1[m1rows][m1cols]; // Result from addition
+    int subMatrix1[m1rows][m1cols]; // Result from addition
     cout << endl;
 
+    
+    // INPUT MATRICES
     cout << "Input numbers for matrix 1." << endl;
     for (i = 0; i < m1rows; i++) {
         cout << "Row " << i+1 << ", enter " << m1cols << " numbers:" << endl;
@@ -53,26 +58,87 @@ int main() {
         }
     }
     cout << endl;
+    
+    // Print out our two matrices to see they were input correctly
+    cout << "Matrix 1:" << endl;
+    for (i = 0; i < m1rows; i++) {
+        for (j = 0; j < m1cols; j++) {
+            cout << matrix1[i][j] << " ";
+        }
+        cout << endl; // Newline for next row
+    }
+    cout << "\n";
+    
+    cout << "Matrix 2:" << endl;
+    for (i = 0; i < m2rows; i++) {
+        for (j = 0; j < m2cols; j++) {
+            cout << matrix2[i][j] << " ";
+        }
+        cout << endl; // Newline for next row
+    }
+    cout << "\n";
+    // END OF INPUT MATRICES
 
+    
+    // MATRIX MULTIPLICATION
     // For each row of matrix1 and for each column of matrix2, multiply the matrices.
     for (i = 0; i < m1rows; i++) {
         for (j = 0; j < m2cols; j++) {
-            sum = 0.0;
-            for (k = 0; k < m2rows; k++)
+            sum = 0;
             // We traverse down the rows of said column in matrix 2 to get the sum for the product matrix.
+            for (k = 0; k < m2rows; k++)
                 sum += matrix1[i][k] * matrix2[k][j];
             prodMatrix1[i][j] = sum;
         }
     }
 
     // Print out the matrix.
-    cout << "Resulting matrix is " << m1rows << "x" << m2cols <<"." << endl;
+    cout << "Resulting product matrix is " << m1rows << "x" << m2cols <<"." << endl;
     for (i = 0; i < m1rows; i++) {
         for (j = 0; j < m2cols; j++) {
             cout << prodMatrix1[i][j] << " ";
         }
         cout << endl; // Newline for next row
     }
+    cout << "\n";
+    // END OF MATRIX MULTIPLICATION
+    
+    
+    // MATRIX ADDITION
+    for (i = 0; i < m1rows; i++) {
+        for (j = 0; j < m1cols; j++){
+            sum = matrix1[i][j] + matrix2[i][j];
+            addMatrix1[i][j] = sum;
+        }
+    }
+    
+    cout << "Matrix 1 + Matrix 2 gave:" << endl;
+    for (i = 0; i < m1rows; i++) {
+        for (j = 0; j < m1cols; j++) {
+            cout << addMatrix1[i][j] << " ";
+        }
+        cout << endl; // Newline for next row
+    }
+    cout << "\n";
+    // END OF MATRIX ADDITION
+    
+    
+    // MATRIX SUBTRACTION
+    for (i = 0; i < m1rows; i++) { 
+        for (j = 0; j < m1cols; j++){
+            diff = matrix1[i][j] - matrix2[i][j];
+            subMatrix1[i][j] = diff;
+        }
+    }
+    
+    cout << "Matrix 1 - Matrix 2 gave:" << endl;
+    for (i = 0; i < m1rows; i++) {
+        for (j = 0; j < m1cols; j++) {
+            cout << subMatrix1[i][j] << " ";
+        }
+        cout << endl; // Newline for next row
+    }
+    // END OF MATRIX SUBTRACTION
     
     return 0;
 }
