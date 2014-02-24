@@ -22,14 +22,16 @@ int main() {
     int sum = 0;
     int diff = 0;
     int diagvalue;
+    int determinant;
+    
     
     // Initialize our test matrices.
     int zeroMatrix[m1cols][m1cols];
-    int diagMatrix[m1cols][m1cols];
+    int dMat[m1cols][m1cols];
     int matrix1[m1rows][m1cols], matrix2[m2rows][m2cols];
-    int prodMatrix1[m1rows][m2cols]; // Result from multiplication
-    int addMatrix1[m1rows][m1cols]; // Result from addition
-    int subMatrix1[m1rows][m1cols]; // Result from addition
+    int multMat[m1rows][m2cols]; // Result from multiplication
+    int addMat[m1rows][m1cols]; // Result from addition
+    int subMat[m1rows][m1cols]; // Result from addition
     
     
     // CREATE ZERO MATRIX
@@ -57,21 +59,36 @@ int main() {
     for (i = 0; i < 3 ; i++) {
         // Initialize entire row to zero first, then insert number into diagonal.
         for (j = 0; j < 3 ; j++)
-            diagMatrix[i][j] = 0;
+            dMat[i][j] = 0;
         j = 0; // Reinitialize j to zero so we can get the correct column in the diagonal
         j += i;
-        diagMatrix[i][j] = diagvalue;
+        dMat[i][j] = diagvalue;
     }     
     
     cout << "Diagonal Matrix:" << endl;
     for (i = 0; i < 3 ; i++) {
         for (j = 0; j < 3 ; j++) {
-            cout << diagMatrix[i][j] << " ";
+            cout << dMat[i][j] << " ";
         }
         cout << endl; // Newline for next row
     }
     cout << "\n";
-    // END CREATE DIAGONAL MATRIX    
+    // END CREATE DIAGONAL MATRIX
+    
+    
+    /*
+      FIND DETERMINANT OF A 3X3 MATRIX
+      det(A) =  A11 * ( A22*A33 - A23*A32 )
+              - A12 * ( A21*A33 - A23*A31 )
+              + A13 * ( A21*A32 - A22*A31 )    
+    */
+    determinant = ( (dMat[0][0] * ( dMat[1][1] * dMat[2][2] - dMat[1][2] * dMat[2][1] ) )
+                   -(dMat[0][1] * ( dMat[1][0] * dMat[2][2] - dMat[1][2] * dMat[2][0] ) )
+                   +(dMat[0][2] * ( dMat[1][0] * dMat[2][1] - dMat[1][1] * dMat[2][0] ) ) );
+    
+    cout << "The determinant of your diagonal matrix is: " << determinant << endl;
+    cout << "\n";
+    // END DETERMINANT
     
     
     // INPUT MATRICES
@@ -122,7 +139,7 @@ int main() {
             // We traverse down the rows of said column in matrix 2 to get the sum for the product matrix.
             for (k = 0; k < m2rows; k++)
                 sum += matrix1[i][k] * matrix2[k][j];
-            prodMatrix1[i][j] = sum;
+            multMat[i][j] = sum;
         }
     }
 
@@ -130,7 +147,7 @@ int main() {
     cout << "Resulting product matrix is " << m1rows << "x" << m2cols <<"." << endl;
     for (i = 0; i < m1rows; i++) {
         for (j = 0; j < m2cols; j++) {
-            cout << prodMatrix1[i][j] << " ";
+            cout << multMat[i][j] << " ";
         }
         cout << endl; // Newline for next row
     }
@@ -142,14 +159,14 @@ int main() {
     for (i = 0; i < m1rows; i++) {
         for (j = 0; j < m1cols; j++){
             sum = matrix1[i][j] + matrix2[i][j];
-            addMatrix1[i][j] = sum;
+            addMat[i][j] = sum;
         }
     }
     
     cout << "Matrix 1 + Matrix 2 gave:" << endl;
     for (i = 0; i < m1rows; i++) {
         for (j = 0; j < m1cols; j++) {
-            cout << addMatrix1[i][j] << " ";
+            cout << addMat[i][j] << " ";
         }
         cout << endl; // Newline for next row
     }
@@ -161,14 +178,14 @@ int main() {
     for (i = 0; i < m1rows; i++) { 
         for (j = 0; j < m1cols; j++){
             diff = matrix1[i][j] - matrix2[i][j];
-            subMatrix1[i][j] = diff;
+            subMat[i][j] = diff;
         }
     }
     
     cout << "Matrix 1 - Matrix 2 gave:" << endl;
     for (i = 0; i < m1rows; i++) {
         for (j = 0; j < m1cols; j++) {
-            cout << subMatrix1[i][j] << " ";
+            cout << subMat[i][j] << " ";
         }
         cout << endl; // Newline for next row
     }
@@ -191,9 +208,9 @@ int main() {
 //    cout << "Matrix 2 columns: ";
 //    cin >> m2cols; // Columns of matrix
 //    int matrix1[m1rows][m1cols], matrix2[m2rows][m2cols];
-//    int prodMatrix1[m1rows][m2cols]; // Result from multiplication
-//    int addMatrix1[m1rows][m1cols]; // Result from addition
-//    int subMatrix1[m1rows][m1cols]; // Result from addition
+//    int multMat[m1rows][m2cols]; // Result from multiplication
+//    int addMat[m1rows][m1cols]; // Result from addition
+//    int subMat[m1rows][m1cols]; // Result from addition
 //    cout << endl;
 //
 //     
