@@ -20,7 +20,12 @@ public:
     Matrix(const Matrix& M); // Copy constructor
     ~Matrix(); // Destructor
     void inputMat();
-    void printMat();
+    //void printMat();
+    friend ostream& operator <<(ostream& out, const Matrix& Mat);
+    friend Matrix operator *(const Matrix& Mat1, const Matrix& Mat2);
+    friend Matrix operator +(const Matrix& Mat1, const Matrix& Mat2);
+    friend Matrix operator -(const Matrix& Mat1);
+    friend Matrix operator -(const Matrix& Mat1, const Matrix& Mat2);
     
 private:
     int data[3][3];
@@ -68,7 +73,7 @@ Matrix::Matrix(const Matrix& M)
 // Destructor
 Matrix::~Matrix()
 {
-        cout << "A matrix has been destroyed." << endl;
+        //cout << "A matrix has been destroyed." << endl;
 }
 
 
@@ -92,18 +97,86 @@ void Matrix::inputMat(){
     
 }
 
-// Print out whatever matrix we wanted.
-void Matrix::printMat(){
+
+
+
+// Overloaded output operator
+ostream& operator <<(ostream& out, const Matrix& Mat){
     
     int i, j;
     //cout << "Matrix:" << endl;
     for (i = 0; i < 3; i++) {
         for (j = 0; j < 3; j++) {
-            cout << data[i][j] << " ";
+            out << Mat.data[i][j] << " ";
         }
-        cout << endl; // Newline for next row
+        out << endl; // Newline for next row
     }
-    cout << "\n";
+    out << "\n";
+    
+}
+
+// Overloaded multiplication operator
+Matrix operator *(const Matrix& Mat1, const Matrix& Mat2){
+    
+    Matrix multMat;
+    int sum = 0;
+    int i, j, k;
+    // For each row of matrix1 and for each column of matrix2, multiply the matrices.
+    for (i = 0; i < 3; i++) {
+        for (j = 0; j < 3; j++) {
+            sum = 0;
+            // We traverse down the rows of said column in matrix 2 to get the sum for the product matrix.
+            for (k = 0; k < 3; k++)
+                sum += Mat1.data[i][k] * Mat2.data[k][j];
+            multMat.data[i][j] = sum;
+        }
+    }
+    return multMat;
+    
+}
+
+// Overloaded addition operator
+Matrix operator +(const Matrix& Mat1, const Matrix& Mat2){
+    
+    Matrix addMat;
+    int sum = 0;
+    int i, j;
+    for (i = 0; i < 3; i++) {
+        for (j = 0; j < 3; j++){
+            sum = Mat1.data[i][j] + Mat2.data[i][j];
+            addMat.data[i][j] = sum;
+        }
+    }
+    return addMat;
+    
+}
+
+// Overloaded binary minus (subtraction) operator
+Matrix operator -(const Matrix& Mat1, const Matrix& Mat2){
+    
+    Matrix subMat;
+    int diff = 0;
+    int i, j;
+    for (i = 0; i < 3; i++) { 
+        for (j = 0; j < 3; j++){
+            diff = Mat1.data[i][j] - Mat2.data[i][j];
+            subMat.data[i][j] = diff;
+        }
+    }
+    return subMat;
+    
+}
+
+// Overloaded unary minus operator
+Matrix operator -(const Matrix& Mat1){
+    
+    Matrix minusMat;
+    int i, j;
+    for (i = 0; i < 3; i++) {
+        for (j = 0; j < 3; j++)
+            minusMat.data[i][j] = (Mat1.data[i][j])*(-1);
+    }
+    return minusMat;
     
 }
 
@@ -113,31 +186,38 @@ int main() {
     // Z is zero matrix.
     Matrix Z;
     cout << "Matrix Z:" << endl;
-    Z.printMat();
+    cout << Z;
     
     // D is 2 diagonal, E is 1 diagonal.
     Matrix D(2);
     cout << "Matrix D:" << endl;
-    D.printMat();
+    cout << D;
     Matrix E(1);
     cout << "Matrix E:" << endl;
-    E.printMat();
+    cout << E;
     
     // A and C are the input file matrices. Initialize to zero first, then input stuff.
     Matrix A;
     Matrix C;
     A.inputMat();
     cout << "Matrix A:" << endl;
-    A.printMat();
+    cout << A;
     C.inputMat();
     cout << "Matrix C:" << endl;
-    C.printMat();
+    cout << C;
     fin.close(); // We are now done with our input file, so close it.
     
     // B is a copy of A.
     Matrix B(A);
     cout << "Matrix B:" << endl;
-    B.printMat();
+    cout << B;
+    
+    // Test mult and add functions.
+    // output works.
+    cout << A*B; // mult works.
+    cout << A+B; // add works.
+    cout << -A; // unary - works.
+    cout << A-B; // binary - works.
     
     
     return 0;
