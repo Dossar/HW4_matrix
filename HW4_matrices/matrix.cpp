@@ -200,15 +200,15 @@ int main() {
 
     // Z is zero matrix.
     Matrix Z;
-    cout << "Matrix Z:" << endl;
+    cout << "Matrix Z (Zero Matrix):" << endl;
     cout << Z;
     
     // D is 2 diagonal, E is 1 diagonal.
     Matrix D(2);
-    cout << "Matrix D:" << endl;
+    cout << "Matrix D (Diagonal-2 Matrix):" << endl;
     cout << D;
     Matrix E(1);
-    cout << "Matrix E:" << endl;
+    cout << "Matrix E (Diagonal-1 Matrix):" << endl;
     cout << E;
     
     // A and C are the input file matrices. Initialize to zero first, then input stuff.
@@ -216,25 +216,40 @@ int main() {
     Matrix C;
     cin >> A; // input works.
     cin >> C; // input works.
-    cout << "Matrix A:" << endl;
+    cout << "Matrix A (from file):" << endl;
     cout << A;
-    cout << "Matrix C:" << endl;
+    cout << "Matrix C (from file):" << endl;
     cout << C;
     fin.close(); // We are now done with our input file, so close it.
     
     // B is a copy of A.
     Matrix B(A);
-    cout << "Matrix B:" << endl;
+    cout << "Matrix B (copy of A):" << endl;
     cout << B;
     
     // Test mult and add functions.
-    // output works.
-    cout << A*B; // mult works.
-    cout << A+B; // add works.
-    cout << -A; // unary - works.
-    cout << A-B; // binary - works.
-    if( A==B )
-        cout << "Both Matrices are the same." << endl; // equality works.
+    if( B==A )
+        cout << "Yes, B==A." << endl; // equality works.
+    
+    cout << "\nResult from A+D:" << endl;
+    cout << A+D; // add works.
+    cout << "Result from A-D:" << endl;
+    cout << A-D; // binary - works
+    cout << "Result from A*D:" << endl;
+    cout << A*D; // mult works.
+    
+    if( A-B==Z )
+        cout << "Yes, A-B==Z." << endl;   
+    if( -A==Z-A )
+        cout << "\nYes, –A==Z-A." << endl;
+    if( A+B==A*D )
+        cout << "\nYes, A+B==A*D." << endl;
+    if( A*E==A )
+        cout << "\nYes, A*E==A." << endl;
+    
+    // cout << -A; // unary - works.
+    
+
     
     
     return 0;
