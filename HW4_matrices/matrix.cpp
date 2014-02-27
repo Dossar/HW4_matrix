@@ -270,12 +270,10 @@ int main() {
     cout << C;
     fin.close(); // We are now done with our input file, so close it.
     
-    
-    
-    
-
-    
+    if( (A*C).det()==A.det()*C.det() )
+        cout << "Yes, det(A*C) is the same as det(A)*det(C)." << endl;   
     
     return 0;
+    
 }
 
