@@ -26,6 +26,8 @@ public:
     friend Matrix operator +(const Matrix& Mat1, const Matrix& Mat2);
     friend Matrix operator -(const Matrix& Mat1);
     friend Matrix operator -(const Matrix& Mat1, const Matrix& Mat2);
+    friend bool operator ==(const Matrix& Mat1, const Matrix& Mat2);
+    friend istream& operator >>(istream& in, Matrix& Mat);
     
 private:
     int data[3][3];
@@ -77,12 +79,11 @@ Matrix::~Matrix()
 }
 
 
-
 // Make fin a global variable so we can save our position in our input file.
 ifstream fin("file.txt");
 
-// Read in stuff from our input file into our matrices.
-void Matrix::inputMat(){
+// Overloaded input operator
+istream& operator >>(istream& in, Matrix& Mat){
     
     int i, j;
     
@@ -91,14 +92,13 @@ void Matrix::inputMat(){
         for( j = 0 ; j < 3 ; j++ ){
             // fin ignores whitespace and newlines
             // We also keep our position in the file with fin
-            fin >> data[i][j];
+            fin >> Mat.data[i][j];
         }
     }
     
+    return in;
+    
 }
-
-
-
 
 // Overloaded output operator
 ostream& operator <<(ostream& out, const Matrix& Mat){
@@ -180,6 +180,21 @@ Matrix operator -(const Matrix& Mat1){
     
 }
 
+// Overloaded equality operator
+bool operator ==(const Matrix& Mat1, const Matrix& Mat2){
+    
+    int i, j;
+    for (i = 0; i < 3; i++) {
+        for (j = 0; j < 3; j++){
+            if( Mat1.data[i][j] != Mat2.data[i][j] ){
+                return false;
+            }
+        }
+    }
+    return true;
+    
+}
+
 
 int main() {
 
@@ -199,10 +214,10 @@ int main() {
     // A and C are the input file matrices. Initialize to zero first, then input stuff.
     Matrix A;
     Matrix C;
-    A.inputMat();
+    cin >> A; // input works.
+    cin >> C; // input works.
     cout << "Matrix A:" << endl;
     cout << A;
-    C.inputMat();
     cout << "Matrix C:" << endl;
     cout << C;
     fin.close(); // We are now done with our input file, so close it.
@@ -218,6 +233,8 @@ int main() {
     cout << A+B; // add works.
     cout << -A; // unary - works.
     cout << A-B; // binary - works.
+    if( A==B )
+        cout << "Both Matrices are the same." << endl; // equality works.
     
     
     return 0;
