@@ -19,7 +19,7 @@ public:
     Matrix(int diagvalue); // Constructor with parameters
     Matrix(const Matrix& M); // Copy constructor
     ~Matrix(); // Destructor
-    void inputMat();
+    int det(); // Determinant function
     //void printMat();
     friend ostream& operator <<(ostream& out, const Matrix& Mat);
     friend Matrix operator *(const Matrix& Mat1, const Matrix& Mat2);
@@ -195,6 +195,22 @@ bool operator ==(const Matrix& Mat1, const Matrix& Mat2){
     
 }
 
+int Matrix::det() {
+    
+    int determinant;
+    /*
+      FIND DETERMINANT OF A 3X3 MATRIX
+      det(A) =  A11 * ( A22*A33 - A23*A32 )
+              - A12 * ( A21*A33 - A23*A31 )
+              + A13 * ( A21*A32 - A22*A31 )    
+    */    
+    determinant = ( (data[0][0] * (data[1][1] * data[2][2] - data[1][2] * data[2][1]) )
+                   -(data[0][1] * (data[1][0] * data[2][2] - data[1][2] * data[2][0]) )
+                   +(data[0][2] * (data[1][0] * data[2][1] - data[1][1] * data[2][0]) ) ) ;
+    return determinant;
+    
+}
+
 
 int main() {
 
@@ -211,26 +227,22 @@ int main() {
     cout << "Matrix E (Diagonal-1 Matrix):" << endl;
     cout << E;
     
-    // A and C are the input file matrices. Initialize to zero first, then input stuff.
+    // Initialize A to zero first, then input stuff.
     Matrix A;
-    Matrix C;
     cin >> A; // input works.
-    cin >> C; // input works.
     cout << "Matrix A (from file):" << endl;
     cout << A;
-    cout << "Matrix C (from file):" << endl;
-    cout << C;
-    fin.close(); // We are now done with our input file, so close it.
     
     // B is a copy of A.
     Matrix B(A);
     cout << "Matrix B (copy of A):" << endl;
     cout << B;
     
-    // Test mult and add functions.
+    // Check that B is indeed a copy of A.
     if( B==A )
         cout << "Yes, B==A." << endl; // equality works.
     
+    // Check that our arithmetic operators work.
     cout << "\nResult from A+D:" << endl;
     cout << A+D; // add works.
     cout << "Result from A-D:" << endl;
@@ -238,6 +250,7 @@ int main() {
     cout << "Result from A*D:" << endl;
     cout << A*D; // mult works.
     
+    // Check that the equality operator works.
     if( A-B==Z )
         cout << "Yes, A-B==Z." << endl;   
     if( -A==Z-A )
@@ -247,7 +260,18 @@ int main() {
     if( A*E==A )
         cout << "\nYes, A*E==A." << endl;
     
-    // cout << -A; // unary - works.
+    cout << "\nThe determinant of D is: " << D.det() << endl;
+    cout << "The determinant of E is: " << E.det() << endl;
+    
+    // Initialize C to zero first, then input stuff.
+    Matrix C;
+    cin >> C; // input works.
+    cout << "\nMatrix C (from file):" << endl;
+    cout << C;
+    fin.close(); // We are now done with our input file, so close it.
+    
+    
+    
     
 
     
