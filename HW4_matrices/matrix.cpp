@@ -20,14 +20,13 @@ public:
     Matrix(const Matrix& M); // Copy constructor
     ~Matrix(); // Destructor
     int det(); // Determinant function
-    //void printMat();
     friend ostream& operator <<(ostream& out, const Matrix& Mat);
     friend Matrix operator *(const Matrix& Mat1, const Matrix& Mat2);
     friend Matrix operator +(const Matrix& Mat1, const Matrix& Mat2);
     friend Matrix operator -(const Matrix& Mat1);
     friend Matrix operator -(const Matrix& Mat1, const Matrix& Mat2);
     friend bool operator ==(const Matrix& Mat1, const Matrix& Mat2);
-    friend istream& operator >>(istream& in, Matrix& Mat);
+    friend ifstream& operator >>(ifstream& in, Matrix& Mat);
     
 private:
     int data[3][3];
@@ -83,7 +82,7 @@ Matrix::~Matrix()
 ifstream fin("file.txt");
 
 // Overloaded input operator
-istream& operator >>(istream& in, Matrix& Mat){
+ifstream& operator >>(ifstream& in, Matrix& Mat){
     
     int i, j;
     
@@ -92,7 +91,7 @@ istream& operator >>(istream& in, Matrix& Mat){
         for( j = 0 ; j < 3 ; j++ ){
             // fin ignores whitespace and newlines
             // We also keep our position in the file with fin
-            fin >> Mat.data[i][j];
+            in >> Mat.data[i][j];
         }
     }
     
@@ -216,7 +215,7 @@ int main() {
 
     // Z is zero matrix.
     Matrix Z;
-    cout << "Matrix Z (Zero Matrix):" << endl;
+    cout << "\nMatrix Z (Zero Matrix):" << endl;
     cout << Z;
     
     // D is 2 diagonal, E is 1 diagonal.
@@ -229,7 +228,7 @@ int main() {
     
     // Initialize A to zero first, then input stuff.
     Matrix A;
-    cin >> A; // input works.
+    fin >> A; // input works.
     cout << "Matrix A (from file):" << endl;
     cout << A;
     
@@ -265,7 +264,7 @@ int main() {
     
     // Initialize C to zero first, then input stuff.
     Matrix C;
-    cin >> C; // input works.
+    fin >> C; // input works.
     cout << "\nMatrix C (from file):" << endl;
     cout << C;
     fin.close(); // We are now done with our input file, so close it.
